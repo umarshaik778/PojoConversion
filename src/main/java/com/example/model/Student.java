@@ -12,18 +12,23 @@ public class Student {
 
     // getters & setters (explicit)
     @JsonProperty("id")
+    @JacksonXmlProperty(localName = "id")
     private int id;
 
     @JsonProperty("student_name")
+    @JacksonXmlProperty(localName = "student_name")
     private String name;
 
     @JsonProperty("branch")
+    @JacksonXmlProperty(localName = "branch")
     private String branch;
 
     @JsonProperty("age")
+    @JacksonXmlProperty(localName = "age")
     private int age;
 
     @JsonProperty("gender")
+    @JacksonXmlProperty(localName = "gender")
     private String gender;
 
 
