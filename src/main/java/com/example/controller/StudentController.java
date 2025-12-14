@@ -52,6 +52,7 @@ public class StudentController {
         return student;
     }
 
+  // JSON -> POJO -> Text
     @PostMapping(
             value = "/customWithJson",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -95,6 +96,7 @@ public class StudentController {
         return sb;
     }
 
+    // XML -> POJO -> Text
     @PostMapping(
             value = "/customWithXml",
             consumes = MediaType.APPLICATION_XML_VALUE,
