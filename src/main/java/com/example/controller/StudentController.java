@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-import javax.print.attribute.standard.Media;
 
 @RestController
 @RequestMapping("/student")
@@ -59,41 +58,7 @@ public class StudentController {
             produces = MediaType.TEXT_PLAIN_VALUE
     )
     public StringBuffer customWithJson(@RequestBody Student student) {
-        StringBuffer sb = new StringBuffer();
-
-        LocalDateTime now = LocalDateTime.now();
-
-        sb.append("Good ");;
-        sb.append( now.getHour() < 12 ?
-                "Morning" : now.getHour() > 11 && now.getHour() < 16 ?
-                "Afternoon" : "Evening"
-        );
-        sb.append(" ");;
-        sb.append(
-                student.getGender().equals("Male")  ?
-                        "Mr." : ( student.getGender().equals("Female" ) ) ?
-                        "Ms." : "Unknown"
-        );
-        sb.append(student.getName());
-        sb.append(".\n");
-        sb.append("Good to know that you are a ");
-        int age = student.getAge();
-        sb.append(
-                age < 30 ?
-                "Developer" : ( age >= 30 && age < 50 ) ?
-                "Senior Developer" : ( age >= 50 && age <= 65 ) ?
-                "Manager" : "Retired Person"
-        );
-        sb.append(" now.");
-        sb.append(" Have a nice day ");
-        sb.append(
-                student.getGender().equals("Male") ?
-                        "Sir" : ( student.getGender().equals("Female") ) ?
-                        "Ma'am" : "Unknown"
-        );
-        sb.append("!");
-        System.out.println(sb.toString());
-        return sb;
+        return generateText(student);
     }
 
     // XML -> POJO -> Text
@@ -103,40 +68,25 @@ public class StudentController {
             produces = MediaType.TEXT_PLAIN_VALUE
     )
     public StringBuffer customWithXml(@RequestBody Student student) {
+        return generateText(student);
+    }
+
+    public StringBuffer generateText(Student student) {
         StringBuffer sb = new StringBuffer();
 
         LocalDateTime now = LocalDateTime.now();
-
-        sb.append("Good ");;
-        sb.append( now.getHour() < 12 ?
-                "Morning" : now.getHour() > 11 && now.getHour() < 16 ?
-                "Afternoon" : "Evening"
-        );
-        sb.append(" ");;
-        sb.append(
-                student.getGender().equals("Male")  ?
-                        "Mr." : ( student.getGender().equals("Female" ) ) ?
-                        "Ms." : "Unknown"
-        );
-        sb.append(student.getName());
-        sb.append(".\n");
-        sb.append("Good to know that you are a ");
+        String Greeting = "Good ";
+        String TimeOfDay = now.getHour() < 12 ? "Morning" : now.getHour() < 16 ? "Afternoon" : "Evening";
+        String Title = student.getGender().equals("Male") ? "Mr." : (student.getGender().equals("Female")) ? "Ms." : "Unknown";
+        String Name = student.getName();
+        String goodToKnow = "Good to know that you are a ";
         int age = student.getAge();
-        sb.append(
-                age < 30 ?
-                        "Developer" : ( age >= 30 && age < 50 ) ?
-                        "Senior Developer" : ( age >= 50 && age <= 65 ) ?
-                        "Manager" : "Retired Person"
-        );
-        sb.append(" now.");
-        sb.append(" Have a nice day ");
-        sb.append(
-                student.getGender().equals("Male") ?
-                        "Sir" : ( student.getGender().equals("Female") ) ?
-                        "Ma'am" : "Unknown"
-        );
-        sb.append("!");
-        System.out.println(sb.toString());
+        String Profession = age < 30 ? "Developer" : age < 50 ? "Senior Developer" : age <= 65 ? "Manager" : "Retired Person";
+        String secondGreeting = "Have a nice day ";
+        String Salutation = student.getGender().equals("Male") ? "Sir" : (student.getGender().equals("Female")) ? "Ma'am" : "Unknown";
+        String FinalString = Greeting + TimeOfDay + " " + Title + Name + ".\n" + goodToKnow + Profession + " now. " + secondGreeting + Salutation + "!";
+        sb.append(FinalString);
+        System.out.println(sb);
         return sb;
     }
 
